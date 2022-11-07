@@ -1,7 +1,7 @@
 <template>
   <div class="container">
  <HeaderVue title="Task Tracker"/>
- <TasksVue @delete-task="deleteTask" :tasks="tasks"/>
+ <TasksVue @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
 
 </div>
   
@@ -29,6 +29,11 @@ export default {
       this.tasks = this.tasks.filter((task) => task.id !== id )
     }
   },
+
+  toggleReminder(id){
+    console.log(id)
+
+  }
 
 
    },
