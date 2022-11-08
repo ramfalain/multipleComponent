@@ -1,7 +1,12 @@
 <template>
+   
   <div class="container">
- <HeaderVue title="Task Tracker"/>
+ <HeaderVue @toggle-add-task ="toggleAddTask" title="Task Tracker"/>
+ <div v-if="showAddTask">
+ <AddTask @add-task="AddTask"/>
+</div>
  <TasksVue @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+
 
 </div>
   
@@ -10,20 +15,34 @@
 <script>
 import HeaderVue from './components/HeaderVue.vue';
 import TasksVue from './components/TasksVue.vue';
+import AddTask from './components/AddTask.vue'
 
 
 export default {
   name: 'App',
   components: {
     HeaderVue,
-    TasksVue
+    TasksVue,
+    AddTask,
    },
    data(){
     return{
-      tasks: []
+      tasks: [],
+      showAddTask: false,
    }
    },
    methods: {
+    toggleAddTask(){
+
+      this.showAddTask = !this.showAddTask
+    },
+
+    AddTask(task){
+      //... (spread accros) the current task and then add a new one to it
+      this.tasks = [...this.tasks, task]
+
+    }, 
+
     deleteTask(id){
       if(confirm('Are you sure?')){
       this.tasks = this.tasks.filter((task) => task.id !== id )
@@ -31,7 +50,8 @@ export default {
   },
 
   toggleReminder(id){
-    console.log(id)
+    //change the sreminder state, maap renders an update arra, the we compare the task id to the intake id , then the initial task is changed to its oppossit value
+    this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} :task)
 
   }
 

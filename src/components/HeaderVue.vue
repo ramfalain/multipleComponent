@@ -1,7 +1,7 @@
 <template>
     <header>
         <h1>{{title}}</h1>
-        <ButtonVue text="Add Task" color="green"/>
+        <ButtonVue @toggle-add-task="$emit('toggle-add-task')" text="Add Task" color="green"/>
     </header>
 </template>
 
